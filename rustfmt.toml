@@ -1,0 +1,9 @@
+# See: https://rust-lang.github.io/rustfmt/
+max_width = 100
+comment_width = 100
+newline_style = "Unix"
+imports_granularity = "Crate"
+group_imports = "StdExternalCrate"
+imports_layout = "HorizontalVertical"
+format_code_in_doc_comments = true
+wrap_comments = true
