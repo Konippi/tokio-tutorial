@@ -1,4 +1,9 @@
-use mini_redis::{Connection, Frame};
+use std::collections::HashMap;
+
+use mini_redis::{
+    Command::{self, Get, Set},
+    Connection, Frame,
+};
 use tokio::net::{TcpListener, TcpStream};
 
 #[tokio::main]
@@ -8,7 +13,7 @@ pub async fn main() {
         .expect("failed to bind to address");
 
     loop {
-        let (scoket, _) = listener.accept().await.expect("failed to accept");
+        let (scoket, _) = listener.accept().await.unwrap();
         tokio::spawn(async move {
             process(scoket).await;
         });
@@ -16,15 +21,25 @@ pub async fn main() {
 }
 
 async fn process(socket: TcpStream) {
+    let mut db = HashMap::<String, Vec<u8>>::new();
     let mut connection = Connection::new(socket);
 
-    if let Some(frame) = connection.read_frame().await.expect("failed to read frame") {
-        println!("GOT: {:?}", frame);
+    while let Some(frame) = connection.read_frame().await.unwrap() {
+        let response = match Command::from_frame(frame).unwrap() {
+            Set(cmd) => {
+                db.insert(cmd.key().to_string(), cmd.value().to_vec());
+                Frame::Simple("OK".to_string())
+            }
+            Get(cmd) => {
+                if let Some(value) = db.get(cmd.key()) {
+                    Frame::Bulk(value.clone().into())
+                } else {
+                    Frame::Null
+                }
+            }
+            cmd => panic!("unimplemented {:?}", cmd),
+        };
 
-        let response = Frame::Error("unimplemented".to_string());
-        connection
-            .write_frame(&response)
-            .await
-            .expect("failed to write frame");
+        connection.write_frame(&response).await.unwrap();
     }
 }
