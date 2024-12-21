@@ -13,9 +13,9 @@ pub async fn main() {
         .expect("failed to bind to address");
 
     loop {
-        let (scoket, _) = listener.accept().await.unwrap();
+        let (socket, _) = listener.accept().await.unwrap();
         tokio::spawn(async move {
-            process(scoket).await;
+            process(socket).await;
         });
     }
 }
