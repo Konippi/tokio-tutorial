@@ -1,3 +1,4 @@
+mod connection;
 mod db;
 
 use db::Db;
