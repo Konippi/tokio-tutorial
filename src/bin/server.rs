@@ -1,12 +1,10 @@
-mod connection;
-mod db;
-
-use db::Db;
 use mini_redis::{
     Command::{self, Get, Set},
     Connection, Frame,
 };
 use tokio::net::{TcpListener, TcpStream};
+
+use tokio_tutorial::db::Db;
 
 #[tokio::main]
 pub async fn main() {
