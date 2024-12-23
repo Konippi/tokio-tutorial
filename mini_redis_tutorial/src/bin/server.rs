@@ -4,7 +4,7 @@ use mini_redis::{
 };
 use tokio::net::{TcpListener, TcpStream};
 
-use tokio_tutorial::db::Db;
+use mini_redis_tutorial::db::Db;
 
 #[tokio::main]
 pub async fn main() {

@@ -485,6 +485,25 @@ dependencies = [
 ]
 
 [[package]]
+name = "mini_redis_tutorial"
+version = "0.1.0"
+dependencies = [
+ "bytes",
+ "frame",
+ "mini-redis",
+ "tokio",
+]
+
+[[package]]
+name = "mini_tokio_tutorial"
+version = "0.1.0"
+dependencies = [
+ "crossbeam",
+ "futures",
+ "tokio",
+]
+
+[[package]]
 name = "miniz_oxide"
 version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -897,18 +916,6 @@ checksum = "eca58d7bba4a75707817a2c44174253f9236b2d5fbd055602e9d5c07c139a047"
 dependencies = [
  "futures-core",
  "pin-project-lite",
- "tokio",
-]
-
-[[package]]
-name = "tokio-tutorial"
-version = "0.1.0"
-dependencies = [
- "bytes",
- "crossbeam",
- "frame",
- "futures",
- "mini-redis",
  "tokio",
 ]
 

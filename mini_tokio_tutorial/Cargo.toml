@@ -1,0 +1,9 @@
+[package]
+name = "mini_tokio_tutorial"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+crossbeam = "0.8.4"
+futures = "0.3.31"
+tokio = { workspace = true }
